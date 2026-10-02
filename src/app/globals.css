@@ -1,23 +1,25 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg: #09090b;
-  --color-surface: #18181b;
-  --color-surface-2: #1f1f23;
-  --color-border: #27272a;
-  --color-fg: #fafafa;
-  --color-muted: #a1a1aa;
-  --color-dim: #71717a;
+  --color-bg: #06060a;
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-surface-solid: #0f0f14;
+  --color-surface-2: rgba(255, 255, 255, 0.06);
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-light: rgba(255, 255, 255, 0.1);
+  --color-fg: #eeeef0;
+  --color-muted: #9494a0;
+  --color-dim: #5e5e6e;
   --color-accent: #22d3ee;
   --color-accent-hover: #06b6d4;
-  --color-accent-glow: rgba(34, 211, 238, 0.08);
+  --color-accent-glow: rgba(34, 211, 238, 0.15);
+  --color-accent-subtle: rgba(34, 211, 238, 0.06);
   --color-red: #ef4444;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 }
 
 * { box-sizing: border-box; margin: 0; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -29,29 +31,90 @@ body {
 }
 
 ::selection {
-  background: rgba(34, 211, 238, 0.2);
-  color: var(--color-fg);
+  background: rgba(34, 211, 238, 0.25);
+  color: #fff;
 }
 
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
 
 input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 40px var(--color-surface) inset;
+  -webkit-box-shadow: 0 0 0 40px #0f0f14 inset;
   -webkit-text-fill-color: var(--color-fg);
 }
 
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+/* ── Noise grain overlay ─────────────────────────────── */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
 }
 
+/* ── Glass card surface ──────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(40px) saturate(1.3);
+  -webkit-backdrop-filter: blur(40px) saturate(1.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Glow button ─────────────────────────────────────── */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+.btn-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: 0 0 28px 4px rgba(34, 211, 238, 0.3);
+}
+.btn-glow:hover::before {
+  opacity: 1;
+}
+
+/* ── Animations ──────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(15px, -20px) scale(1.05); }
+  66% { transform: translate(-10px, 10px) scale(0.97); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
 
 .animate-fade-up {
-  animation: fade-up 0.4s ease-out both;
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Subtle dot grid ─────────────────────────────────── */
+.dot-grid {
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
