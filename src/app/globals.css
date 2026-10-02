@@ -1,42 +1,57 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg: #0a0a0f;
-  --color-surface: #111118;
-  --color-surface-2: #1a1a24;
-  --color-border: #2a2a3a;
-  --color-fg: #e8e8f0;
-  --color-muted: #8888a0;
-  --color-accent: #6c5ce7;
-  --color-accent-light: #a29bfe;
-  --color-green: #00b894;
-  --color-red: #ff6b6b;
-  --font-sans: system-ui, -apple-system, sans-serif;
+  --color-bg: #09090b;
+  --color-surface: #18181b;
+  --color-surface-2: #1f1f23;
+  --color-border: #27272a;
+  --color-fg: #fafafa;
+  --color-muted: #a1a1aa;
+  --color-dim: #71717a;
+  --color-accent: #22d3ee;
+  --color-accent-hover: #06b6d4;
+  --color-accent-glow: rgba(34, 211, 238, 0.08);
+  --color-red: #ef4444;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; margin: 0; }
+
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--color-bg);
   color: var(--color-fg);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.2);
+  color: var(--color-fg);
 }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
 
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(8px); }
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 40px var(--color-surface) inset;
+  -webkit-text-fill-color: var(--color-fg);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.3); }
-  50% { box-shadow: 0 0 20px 4px rgba(108, 92, 231, 0.15); }
+.animate-fade-up {
+  animation: fade-up 0.4s ease-out both;
 }
