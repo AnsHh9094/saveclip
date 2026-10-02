@@ -103,40 +103,54 @@ export default function Home() {
   }
 
   return (
-    <div className="grain">
-      {/* ── Ambient glow orbs ─────────────────────────────── */}
+    <div className="grain min-h-screen flex flex-col">
+      {/* ── Layered ambient glow ───────────────────────────── */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        {/* Primary cyan glow — top left */}
         <div
           className="absolute rounded-full"
           style={{
-            width: "clamp(400px, 50vw, 700px)",
-            height: "clamp(400px, 50vw, 700px)",
-            background: "radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 65%)",
-            top: "-15%",
-            left: "15%",
-            animation: "float 20s ease-in-out infinite",
+            width: "clamp(500px, 60vw, 900px)",
+            height: "clamp(500px, 60vw, 900px)",
+            background: "radial-gradient(circle, rgba(34,211,238,0.12) 0%, rgba(34,211,238,0.04) 35%, transparent 65%)",
+            top: "-20%",
+            left: "10%",
+            animation: "float 22s ease-in-out infinite",
           }}
         />
+        {/* Indigo secondary glow — right */}
         <div
           className="absolute rounded-full"
           style={{
-            width: "clamp(300px, 40vw, 550px)",
-            height: "clamp(300px, 40vw, 550px)",
-            background: "radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 65%)",
-            top: "40%",
-            right: "-8%",
-            animation: "float 25s ease-in-out infinite reverse",
+            width: "clamp(400px, 50vw, 750px)",
+            height: "clamp(400px, 50vw, 750px)",
+            background: "radial-gradient(circle, rgba(99,102,241,0.09) 0%, rgba(99,102,241,0.03) 35%, transparent 65%)",
+            top: "30%",
+            right: "-10%",
+            animation: "float 28s ease-in-out infinite reverse",
           }}
         />
+        {/* Warm accent — bottom */}
         <div
           className="absolute rounded-full"
           style={{
-            width: "clamp(250px, 35vw, 450px)",
-            height: "clamp(250px, 35vw, 450px)",
-            background: "radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 65%)",
-            bottom: "5%",
-            left: "-5%",
-            animation: "float 22s ease-in-out infinite 3s",
+            width: "clamp(350px, 45vw, 600px)",
+            height: "clamp(350px, 45vw, 600px)",
+            background: "radial-gradient(circle, rgba(34,211,238,0.07) 0%, transparent 60%)",
+            bottom: "-5%",
+            left: "30%",
+            animation: "breathe 18s ease-in-out infinite",
+          }}
+        />
+        {/* Extra subtle center glow for depth */}
+        <div
+          className="absolute"
+          style={{
+            width: "100%",
+            height: "60%",
+            background: "radial-gradient(ellipse at 50% 0%, rgba(34,211,238,0.04) 0%, transparent 55%)",
+            top: "0",
+            left: "0",
           }}
         />
       </div>
@@ -162,19 +176,19 @@ export default function Home() {
       </nav>
 
       {/* ── Hero ──────────────────────────────────────────── */}
-      <section className="relative z-10 px-6 pt-16 sm:pt-28 pb-8">
+      <section className="relative z-10 px-6 pt-20 sm:pt-32 pb-8 flex-1">
         <div className="max-w-5xl mx-auto text-center">
-          <h1 className="text-[2.5rem] sm:text-[3.75rem] font-extrabold tracking-[-0.03em] leading-[1.1] mb-5 text-fg">
+          <h1 className="text-[2.75rem] sm:text-[4rem] font-extrabold tracking-[-0.035em] leading-[1.05] mb-6 text-fg">
             Save any video,<br />from anywhere
           </h1>
-          <p className="text-muted text-base sm:text-lg leading-relaxed mb-10 max-w-lg mx-auto">
+          <p className="text-muted text-base sm:text-lg leading-relaxed mb-12 max-w-md mx-auto">
             Paste a link from Instagram, YouTube, Twitter, TikTok or Facebook. Pick a quality. Download.
           </p>
 
-          {/* ── Input bar ────────────────────────────────── */}
+          {/* ── Input bar with glow ───────────────────────── */}
           <div className="max-w-xl mx-auto">
             <form onSubmit={handleSubmit}>
-              <div className="glass-strong rounded-2xl p-1.5 sm:p-2 shadow-2xl shadow-accent/[0.04]">
+              <div className="input-glow glass-strong gradient-border rounded-2xl p-1.5 sm:p-2">
                 <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2">
                   <input
                     type="url"
@@ -187,12 +201,12 @@ export default function Home() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="btn-glow px-7 py-3.5 bg-accent hover:bg-accent-hover text-[#06060a] font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shrink-0 text-[15px]"
+                    className="btn-glow px-7 py-3.5 bg-accent hover:bg-accent-hover text-[#050508] font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shrink-0 text-[15px]"
                   >
                     {loading ? (
                       <>
                         <SpinnerIcon />
-                        <span>Fetching…</span>
+                        <span>Fetching...</span>
                       </>
                     ) : (
                       <>
@@ -205,8 +219,8 @@ export default function Home() {
               </div>
             </form>
 
-            <p className="text-dim/40 text-xs text-center mt-4 tracking-wide">
-              No account needed · Nothing stored · Completely free
+            <p className="text-dim/50 text-xs text-center mt-5 tracking-wide">
+              No account needed &middot; Nothing stored &middot; Completely free
             </p>
           </div>
 
@@ -220,7 +234,7 @@ export default function Home() {
           {/* ── Result ────────────────────────────────────── */}
           {result && (
             <div className="max-w-xl mx-auto mt-6 animate-fade-up text-left">
-              <div className="glass-strong rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
+              <div className="glass-strong gradient-border rounded-2xl overflow-hidden">
                 <div className="flex gap-4 p-5 border-b border-white/[0.06]">
                   {result.thumbnail && (
                     <img
@@ -274,14 +288,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Divider glow line ─────────────────────────────── */}
+      <div className="relative z-10 px-6">
+        <div className="divider-glow max-w-3xl mx-auto" />
+      </div>
+
       {/* ── Platform strip ────────────────────────────────── */}
-      <section className="relative z-10 px-6 py-10">
-        <div className="max-w-xl mx-auto flex flex-wrap justify-center gap-2">
+      <section className="relative z-10 px-6 py-12">
+        <div className="max-w-xl mx-auto flex flex-wrap justify-center gap-2.5">
           {platforms.map((p) => (
             <Link
               key={p.id}
               href={p.href}
-              className="glass rounded-xl px-5 py-2.5 text-sm text-muted hover:text-fg hover:bg-white/[0.04] transition-all font-medium"
+              className="platform-pill rounded-xl px-5 py-2.5 text-sm text-muted hover:text-fg transition-all font-medium"
             >
               {p.label}
             </Link>
@@ -289,14 +308,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Divider glow line ─────────────────────────────── */}
+      <div className="relative z-10 px-6">
+        <div className="divider-glow max-w-3xl mx-auto" />
+      </div>
+
       {/* ── How it works ──────────────────────────────────── */}
-      <section className="relative z-10 px-6 py-16">
+      <section className="relative z-10 px-6 py-20">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-fg text-center mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-fg text-center mb-10">
             Three steps, that&apos;s it
           </h2>
 
-          <div className="grid sm:grid-cols-3 gap-3 max-w-3xl mx-auto">
+          <div className="grid sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {[
               {
                 step: "Copy",
@@ -311,11 +335,11 @@ export default function Home() {
                 desc: "Pick your preferred quality and save the file directly to your device.",
               },
             ].map((item, i) => (
-              <div key={i} className="glass rounded-2xl p-5 hover:bg-white/[0.04] transition-colors group">
-                <div className="w-8 h-8 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-sm font-semibold mb-4 group-hover:bg-accent/15 transition-colors">
+              <div key={i} className="glass gradient-border rounded-2xl p-6 transition-all hover:translate-y-[-2px] group">
+                <div className="step-badge w-9 h-9 rounded-lg flex items-center justify-center text-sm text-accent font-semibold mb-5">
                   {i + 1}
                 </div>
-                <h3 className="text-fg font-semibold text-[15px] mb-1.5">{item.step}</h3>
+                <h3 className="text-fg font-semibold text-base mb-2">{item.step}</h3>
                 <p className="text-dim text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
@@ -323,14 +347,19 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Divider glow line ─────────────────────────────── */}
+      <div className="relative z-10 px-6">
+        <div className="divider-glow max-w-3xl mx-auto" />
+      </div>
+
       {/* ── FAQ ────────────────────────────────────────────── */}
-      <section className="relative z-10 px-6 py-16">
+      <section className="relative z-10 px-6 py-20">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-fg text-center mb-8">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-fg text-center mb-10">
             Frequently asked
           </h2>
 
-          <div className="max-w-xl mx-auto glass rounded-2xl overflow-hidden divide-y divide-white/[0.04]">
+          <div className="max-w-xl mx-auto glass gradient-border rounded-2xl overflow-hidden divide-y divide-white/[0.05]">
             {[
               {
                 q: "Is SaveClip free?",
@@ -354,7 +383,7 @@ export default function Home() {
               },
             ].map((faq, i) => (
               <details key={i} className="group">
-                <summary className="px-5 py-4 cursor-pointer flex items-center justify-between text-left text-sm text-fg font-medium transition-colors hover:bg-white/[0.02]">
+                <summary className="px-6 py-4.5 cursor-pointer flex items-center justify-between text-left text-sm text-fg font-medium transition-colors hover:bg-white/[0.025]">
                   {faq.q}
                   <svg
                     className="w-4 h-4 text-dim group-open:rotate-45 transition-transform shrink-0 ml-4"
@@ -368,7 +397,7 @@ export default function Home() {
                     <line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
                 </summary>
-                <p className="px-5 pb-4 text-sm text-dim leading-relaxed">{faq.a}</p>
+                <p className="px-6 pb-5 text-sm text-dim leading-relaxed">{faq.a}</p>
               </details>
             ))}
           </div>
@@ -376,7 +405,7 @@ export default function Home() {
       </section>
 
       {/* ── Footer ─────────────────────────────────────────── */}
-      <footer className="relative z-10 px-6 py-8 border-t border-white/[0.04]">
+      <footer className="relative z-10 px-6 py-10 border-t border-white/[0.05]">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <Link href="/" className="text-fg font-bold text-sm tracking-tight">
             save<span className="text-accent">clip</span>
